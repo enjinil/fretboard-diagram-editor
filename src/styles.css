@@ -44,3 +44,26 @@ fieldset button {
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
 }
+
+.source-link {
+  font-size: .8rem;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1rem;
+  text-decoration: none;
+  color: #8a2be2;
+}
+
+.source-link svg {
+  margin-right: .3rem;
+  margin-bottom: 2px;
+}
+
+
+.source-link:hover {
+  color: #6a00cc;
+}
+
+.source-link:focus {
+  color: #6a00cc;
+}
