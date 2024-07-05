@@ -6,6 +6,7 @@ body {
   font-family: sans-serif;
   margin: 20px;
   padding: 0;
+  background-color: #fffcf1;
 }
 
 .note-selector:hover {
@@ -13,8 +14,28 @@ body {
   transition: opacity 100ms ease-in;
 }
 
+.save-button {
+  text-decoration: none;
+  font-weight: bold;
+  color: #8a2be2;
+}
+
+.save-button::before {
+  content: "💾";
+  margin-right: .5rem;
+}
+
+.save-button:hover {
+  color: #6a00cc;
+}
+
+.save-button:focus {
+  color: #6a00cc;
+}
+
 fieldset {
   margin-bottom: 1rem;
+  background-color: #f0ece0;
 }
 
 fieldset button {

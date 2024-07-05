@@ -103,7 +103,7 @@ export default function MyApp() {
           </label>
         </div>
         <div style={{marginLeft: 'auto'}}>
-          <a href={svgUrl} download="diagram.svg">
+          <a className='save-button' href={svgUrl} download="diagram.svg">
             Save SVG
           </a>
         </div>
