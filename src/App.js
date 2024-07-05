@@ -1,15 +1,18 @@
-import * as React from "react";
-import { config, guitarNoteNames } from "./constant";
-import { Fretboard, Notes, NoteSelector } from "./Fretboard";
+import * as React from 'react'
+import {config, guitarNoteNames} from './constant'
+import {createSvgObjectUrl} from './utils'
+import {Fretboard} from './Fretboard'
+import {NoteSelector} from './NoteSelector'
+import {Note} from './Note'
 import {
   buildNotes,
   chromaticScaleNotes,
   majorScaleNotes,
   minorScaleNotes,
   scalePatterns,
-} from "./scales";
+} from './scales'
 
-const SvgContainer = React.forwardRef(({ children, width, height }, ref) => {
+const SvgContainer = React.forwardRef(({children, width, height}, ref) => {
   return (
     <svg
       ref={ref}
@@ -19,59 +22,50 @@ const SvgContainer = React.forwardRef(({ children, width, height }, ref) => {
     >
       {children}
     </svg>
-  );
-});
+  )
+})
 
 export default function MyApp() {
-  const [notes, setNotes] = React.useState(chromaticScaleNotes());
-  const [rootNote, setRootNote] = React.useState("G");
-  const [isSelectorVisible, setIsSelectorVisible] = React.useState(false);
-  const [svgUrl, setSvgUrl] = React.useState("");
-  const svg = React.useRef(null);
+  const [notes, setNotes] = React.useState(chromaticScaleNotes())
+  const [rootNote, setRootNote] = React.useState('G')
+  const [isSelectorVisible, setIsSelectorVisible] = React.useState(false)
+  const [svgUrl, setSvgUrl] = React.useState('')
+  const svg = React.useRef(null)
 
   function toggleNote(newNote) {
     const existingIndex = notes.findIndex(
-      (note) => JSON.stringify(note) == JSON.stringify(newNote)
-    );
+      note => JSON.stringify(note) == JSON.stringify(newNote),
+    )
 
     if (existingIndex > -1) {
-      setNotes(notes.filter((_, i) => i != existingIndex));
+      setNotes(notes.filter((_, i) => i != existingIndex))
     } else {
-      setNotes([...notes, newNote]);
+      setNotes([...notes, newNote])
     }
   }
 
   React.useEffect(() => {
-    var svgEl = svg.current.cloneNode(true);
-
-    if (!svgEl) return;
-    // Remove note selector
-    svgEl.querySelector("[role=note-selector]")?.remove();
-
-    var serializer = new XMLSerializer();
-    var source = serializer.serializeToString(svgEl);
+    var svgEl = svg.current.cloneNode(true)
 
     if (svgUrl) {
-      URL.revokeObjectURL(svgUrl);
+      URL.revokeObjectURL(svgUrl)
     }
 
-    var objectUrl = URL.createObjectURL(
-      new Blob([source], { type: "image/svg+xml" })
-    );
-
-    setSvgUrl(objectUrl);
-  }, []);
+    setSvgUrl(createSvgObjectUrl(svgEl))
+  }, [])
 
   return (
     <>
-      <div style={{ overflow: "scroll" }}>
+      <div style={{overflow: 'scroll'}}>
         <SvgContainer
           ref={svg}
           width={config.blockWidth * config.fretBlockNumber}
           height={config.fretboardHeight + config.fretLabelHeight}
         >
           <Fretboard />
-          <Notes notes={notes} rootNote={rootNote} />
+          {notes.map(note => (
+            <Note key={note.toString()} note={note} rootNote={rootNote} />
+          ))}
           <NoteSelector
             rootNote={rootNote}
             visible={isSelectorVisible}
@@ -80,21 +74,21 @@ export default function MyApp() {
         </SvgContainer>
       </div>
       <br />
-      <div style={{ display: "flex" }}>
+      <div style={{display: 'flex'}}>
         <div>
           <label htmlFor="">Root note: </label>
           <select
             value={rootNote}
-            onChange={(e) => {
-              setRootNote(e.target.value);
+            onChange={e => {
+              setRootNote(e.target.value)
             }}
           >
-            {guitarNoteNames.map((n) => {
+            {guitarNoteNames.map(n => {
               return (
                 <option value={n} key={n}>
                   {n}
                 </option>
-              );
+              )
             })}
           </select>
           <label>
@@ -102,13 +96,13 @@ export default function MyApp() {
               type="checkbox"
               checked={isSelectorVisible}
               onChange={() => {
-                setIsSelectorVisible(!isSelectorVisible);
+                setIsSelectorVisible(!isSelectorVisible)
               }}
             />
             Show all notes
           </label>
         </div>
-        <div style={{ marginLeft: "auto" }}>
+        <div style={{marginLeft: 'auto'}}>
           <a href={svgUrl} download="diagram.svg">
             Save SVG
           </a>
@@ -129,35 +123,35 @@ export default function MyApp() {
           |
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["major-c-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['major-c-shape'], rootNote))
             }
           >
             C Shape
           </button>
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["major-a-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['major-a-shape'], rootNote))
             }
           >
             A Shape
           </button>
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["major-g-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['major-g-shape'], rootNote))
             }
           >
             G Shape
           </button>
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["major-e-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['major-e-shape'], rootNote))
             }
           >
             E Shape
           </button>
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["major-d-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['major-d-shape'], rootNote))
             }
           >
             D Shape
@@ -171,35 +165,35 @@ export default function MyApp() {
           |
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["minor-c-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['minor-c-shape'], rootNote))
             }
           >
             C Shape
           </button>
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["minor-a-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['minor-a-shape'], rootNote))
             }
           >
             A Shape
           </button>
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["minor-g-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['minor-g-shape'], rootNote))
             }
           >
             G Shape
           </button>
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["minor-e-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['minor-e-shape'], rootNote))
             }
           >
             E Shape
           </button>
           <button
             onClick={() =>
-              setNotes(buildNotes(scalePatterns["minor-d-shape"], rootNote))
+              setNotes(buildNotes(scalePatterns['minor-d-shape'], rootNote))
             }
           >
             D Shape
@@ -209,30 +203,30 @@ export default function MyApp() {
           <legend>Modes</legend>
           <div>
             {[
-              "Ionian",
-              "Dorian",
-              "Phrygian",
-              "Lydian",
-              "Mixolydian",
-              "Aeolian",
-              "Locrian",
-            ].map((mode) => {
+              'Ionian',
+              'Dorian',
+              'Phrygian',
+              'Lydian',
+              'Mixolydian',
+              'Aeolian',
+              'Locrian',
+            ].map(mode => {
               return (
                 <button
                   key={mode}
                   onClick={() =>
                     setNotes(
-                      buildNotes(scalePatterns[mode.toLowerCase()], rootNote)
+                      buildNotes(scalePatterns[mode.toLowerCase()], rootNote),
                     )
                   }
                 >
                   {rootNote} {mode}
                 </button>
-              );
+              )
             })}
           </div>
         </fieldset>
       </section>
     </>
-  );
+  )
 }
