@@ -19,7 +19,7 @@ function Neck() {
       x={config.blockWidth}
       y="0"
       width="100%"
-      height={config.fretboardHeight}
+      height={config.fretboardHeight + config.fretboardPaddingY * 2}
       fill="#BA8C63"
     />
   )
@@ -32,7 +32,7 @@ function FretLabels() {
       style={{textAnchor: 'middle'}}
       fill="#444444"
       x={(n + 0.5) * config.blockWidth}
-      y={config.fretboardHeight + config.fretLabelHeight / 2}
+      y={config.fretboardHeight + config.fretboardPaddingY * 2 + config.fretLabelHeight / 2}
     >
       {n}
     </text>
@@ -46,7 +46,7 @@ function FretWires() {
       y="2"
       x={fromLeft(i + 1)}
       width="4"
-      height={config.fretboardHeight - 4}
+      height={config.fretboardHeight + config.fretboardPaddingY * 2 - 4}
       rx="2"
       ry="2"
       fill="#d4d4d8"
@@ -62,13 +62,13 @@ function Inlays() {
       <g key={n}>
         <circle
           cx={(n + 0.5) * config.blockWidth}
-          cy={config.fretboardHeight / 2 - offsetOn12}
+          cy={(config.fretboardHeight + config.fretboardPaddingY * 2) / 2 - offsetOn12}
           r={config.inlaySize}
           fill="#111111"
         />
         <circle
           cx={(n + 0.5) * config.blockWidth}
-          cy={config.fretboardHeight / 2 + offsetOn12}
+          cy={(config.fretboardHeight + config.fretboardPaddingY * 2) / 2 + offsetOn12}
           r={config.inlaySize}
           fill="#111111"
         />
@@ -77,7 +77,7 @@ function Inlays() {
       <circle
         key={n}
         cx={(n + 0.5) * config.blockWidth}
-        cy={config.fretboardHeight / 2}
+        cy={(config.fretboardHeight + config.fretboardPaddingY * 2) / 2}
         r={config.inlaySize}
         fill="#111111"
       />
@@ -87,13 +87,13 @@ function Inlays() {
 
 function GuitarStrings() {
   const fromTop = position => {
-    return (position + 1) * (config.noteCircleSize + config.noteCircleMargin * 2) - config.noteCircleMargin
+    return (position - .5) * (config.fretboardHeight) / config.stringNumber + config.fretboardPaddingY - (position + 1) / 2
   }
-  return makeArray(6).map((_, i) => (
+  return makeArray(config.stringNumber).map((_, i) => (
     <rect
       x="0"
-      y={fromTop(i)}
-      height={1 + i}
+      y={fromTop(i + 1)}
+      height={i + 1}
       width="100%"
       fill="#EEEEEE"
     />

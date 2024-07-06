@@ -7,7 +7,7 @@ function Note({note, rootNote, ...props}) {
   const fromLeft =
     config.blockWidth * (fretPosition + 1) - config.blockWidth / 2
   const fromTop =
-    (config.noteCircleSize + config.noteCircleMargin * 2) * stringPosition - 1
+    config.fretboardHeight / config.stringNumber * (stringPosition - .5) + config.fretboardPaddingY 
   const noteName = getNoteName(note)
   const fontSize = noteName.length > 2 ? 10 : 14
 

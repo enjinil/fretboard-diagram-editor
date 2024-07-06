@@ -36,24 +36,28 @@ export const notePositionNames = [
 ]
 
 export const config = (() => {
+  const stringNumber = 6
   const blockWidth = 60
   const noteCircleSize = 34
   const noteCircleMargin = 2
+  const fretboardPaddingY = noteCircleMargin * 2
   const inlaysPositions = [3, 5, 7, 9, 12, 15]
   const inlaySize = 8
   const fretBlockNumber = 16
   const fretLabelHeight = 40
   const fretboardHeight =
-    (noteCircleSize + noteCircleMargin * 2) * (6 + 1) - 2 * noteCircleMargin
+    (noteCircleSize + noteCircleMargin * 2) * (stringNumber)
 
   return {
     blockWidth,
     fretboardHeight,
+    fretboardPaddingY,
     fretLabelHeight,
     fretBlockNumber,
     inlaysPositions,
     inlaySize,
     noteCircleSize,
     noteCircleMargin,
+    stringNumber,
   }
 })()
